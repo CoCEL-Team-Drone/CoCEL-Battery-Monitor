@@ -12,3 +12,67 @@ $RECYCLE.BIN/
 *.lnk
 
 *.zip
+
+# =========================
+# Embedded
+# =========================
+# =========================
+# Build output
+# =========================
+Debug/
+Release/
+build/
+Build/
+out/
+
+*.o
+*.obj
+*.d
+*.dep
+*.su
+*.cyclo
+*.gcno
+*.gcda
+
+*.elf
+*.axf
+*.hex
+*.bin
+*.map
+*.list
+*.lst
+*.siz
+
+# =========================
+# STM32CubeIDE / Eclipse
+# =========================
+.metadata/
+.recommenders/
+
+.settings/language.settings.xml
+
+# Launch/debug session files
+*.launch
+
+# =========================
+# Editors
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Temporary / backup files
+# =========================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
