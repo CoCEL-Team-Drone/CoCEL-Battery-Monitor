@@ -1,3 +1,11 @@
+#### KiCAD
+1_PCB/.history/
+1_PCB/PowerMonitor-backups/
+*.kicad_prl
+*.fp-info-cache
+*.kicad_pro.lck
+*.kicad_sch.lck
+
 ### Windows
 # Windows thumbnail cache files
 Thumbs.db
