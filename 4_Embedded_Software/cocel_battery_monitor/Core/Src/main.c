@@ -612,11 +612,11 @@ HAL_StatusTypeDef BQ_SetVcellMode(uint8_t cell_count)
 
 	if (cell_count == 4U)
 	{
-		mode = 0x000F;
+		mode = 0x000F; // Cell1~Cell4 enabled
 	}
 	else if (cell_count == 6U)
 	{
-		mode = 0x003F;
+		mode = 0x030F; // Cell1~4,Cell9~10 // mode = 0x003F; // Cell1~Cell6 enabled
 	}
 	else
 	{
@@ -1064,31 +1064,63 @@ HAL_StatusTypeDef BQ_ReadBattRawData(BattRawData *data)
 
 	data->timestamp = HAL_GetTick();
 
-	status = BQ_ReadU16(0x14, &data->cell1);
-	if (status != HAL_OK) return status;
+//	status = BQ_ReadU16(0x14, &data->cell1);
+//	if (status != HAL_OK) return status;
+//
+//	status = BQ_ReadU16(0x16, &data->cell2);
+//	if (status != HAL_OK) return status;
+//
+//	status = BQ_ReadU16(0x18, &data->cell3);
+//	if (status != HAL_OK) return status;
+//
+//	status = BQ_ReadU16(0x1A, &data->cell4);
+//	if (status != HAL_OK) return status;
+//
+//	if(CELL_NUM == 6)
+//	{
+//		status = BQ_ReadU16(0x24, &data->cell5); // status = BQ_ReadU16(0x1C, &data->cell5);
+//		if (status != HAL_OK) return status;
+//
+//		status = BQ_ReadU16(0x26, &data->cell6); // status = BQ_ReadU16(0x1E, &data->cell6);
+//		if (status != HAL_OK) return status;
+//	}
+//	else
+//	{
+//		data->cell5 = 0;
+//		data->cell6 = 0;
+//	}
 
-	status = BQ_ReadU16(0x16, &data->cell2);
-	if (status != HAL_OK) return status;
-
-	status = BQ_ReadU16(0x18, &data->cell3);
-	if (status != HAL_OK) return status;
-
-	status = BQ_ReadU16(0x1A, &data->cell4);
-	if (status != HAL_OK) return status;
-
-	if(CELL_NUM == 6)
-	{
-		status = BQ_ReadU16(0x1C, &data->cell5);
+		status = BQ_ReadU16(0x14, &data->cell1); // cell 1
 		if (status != HAL_OK) return status;
 
-		status = BQ_ReadU16(0x1E, &data->cell6);
+		status = BQ_ReadU16(0x16, &data->cell2); // cell 2
 		if (status != HAL_OK) return status;
-	}
-	else
-	{
-		data->cell5 = 0;
-		data->cell6 = 0;
-	}
+
+		if(CELL_NUM == 6)
+		{
+			status = BQ_ReadU16(0x18, &data->cell3); // cell 3
+			if (status != HAL_OK) return status;
+
+			status = BQ_ReadU16(0x1A, &data->cell4); // cell 4
+			if (status != HAL_OK) return status;
+
+			status = BQ_ReadU16(0x1C, &data->cell5); // status = BQ_ReadU16(0x1C, &data->cell5);
+			if (status != HAL_OK) return status;
+
+			status = BQ_ReadU16(0x26, &data->cell6); // status = BQ_ReadU16(0x1E, &data->cell6);
+			if (status != HAL_OK) return status;
+		}
+		else
+		{
+			status = BQ_ReadU16(0x24, &data->cell3); // cell5
+			if (status != HAL_OK) return status;
+
+			status = BQ_ReadU16(0x26, &data->cell4); // cell6
+			if (status != HAL_OK) return status;
+
+			data->cell5 = 0;
+			data->cell6 = 0;
+		}
 
 	status = BQ_ReadU16(0x34, &data->stack_voltage_raw);
 	if (status != HAL_OK) return status;
