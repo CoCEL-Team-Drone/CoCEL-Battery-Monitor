@@ -1064,31 +1064,18 @@ HAL_StatusTypeDef BQ_ReadBattRawData(BattRawData *data)
 
 	data->timestamp = HAL_GetTick();
 
-//	status = BQ_ReadU16(0x14, &data->cell1);
-//	if (status != HAL_OK) return status;
-//
-//	status = BQ_ReadU16(0x16, &data->cell2);
-//	if (status != HAL_OK) return status;
-//
-//	status = BQ_ReadU16(0x18, &data->cell3);
-//	if (status != HAL_OK) return status;
-//
-//	status = BQ_ReadU16(0x1A, &data->cell4);
-//	if (status != HAL_OK) return status;
-//
-//	if(CELL_NUM == 6)
-//	{
-//		status = BQ_ReadU16(0x24, &data->cell5); // status = BQ_ReadU16(0x1C, &data->cell5);
-//		if (status != HAL_OK) return status;
-//
-//		status = BQ_ReadU16(0x26, &data->cell6); // status = BQ_ReadU16(0x1E, &data->cell6);
-//		if (status != HAL_OK) return status;
-//	}
-//	else
-//	{
-//		data->cell5 = 0;
-//		data->cell6 = 0;
-//	}
+	/*
+	 * cell 1: 0x14 => vc1 - vc0
+	 * cell 2: 0x16 => vc2 - vc1
+	 * cell 3: 0x18 => vc3 - vc2
+	 * cell 4: 0x1A => vc4 - vc3
+	 * cell 5: 0x1C => vc5 - vc4
+	 * cell 6: 0x1E => vc6 - vc5
+	 * cell 7: 0x20 => vc7 - vc6
+	 * cell 8: 0x22 => vc8 - vc7
+	 * cell 9: 0x24 => vc9 - vc8
+	 * cell 10: 0x26 => vc10 - vc9
+	 */
 
 		status = BQ_ReadU16(0x14, &data->cell1); // cell 1
 		if (status != HAL_OK) return status;
@@ -1104,18 +1091,18 @@ HAL_StatusTypeDef BQ_ReadBattRawData(BattRawData *data)
 			status = BQ_ReadU16(0x1A, &data->cell4); // cell 4
 			if (status != HAL_OK) return status;
 
-			status = BQ_ReadU16(0x1C, &data->cell5); // status = BQ_ReadU16(0x1C, &data->cell5);
+			status = BQ_ReadU16(0x1C, &data->cell5); // cell 5
 			if (status != HAL_OK) return status;
 
-			status = BQ_ReadU16(0x26, &data->cell6); // status = BQ_ReadU16(0x1E, &data->cell6);
+			status = BQ_ReadU16(0x26, &data->cell6); // cell 10
 			if (status != HAL_OK) return status;
 		}
 		else
 		{
-			status = BQ_ReadU16(0x24, &data->cell3); // cell5
+			status = BQ_ReadU16(0x18, &data->cell3); // cell 3
 			if (status != HAL_OK) return status;
 
-			status = BQ_ReadU16(0x26, &data->cell4); // cell6
+			status = BQ_ReadU16(0x26, &data->cell4); // cell 10
 			if (status != HAL_OK) return status;
 
 			data->cell5 = 0;
